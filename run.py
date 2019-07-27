@@ -40,6 +40,7 @@ def wait_for_connection():
         response = os.system("ping -c 1 " + hostname)
 
 def say(text):
+    print(text)
     cmd = "say \"{}\"".format(text)
     subprocess.call(cmd, shell=True)
 
@@ -61,20 +62,23 @@ def match_station(input_text):
 	    '42ndstreet': '42nd St - Port Authority Bus Terminal',
 	    'portauthority': '42nd St - Port Authority Bus Terminal',
 	    'busterminal': '42nd St - Port Authority Bus Terminal',
-	    '34thstpennstation': '34th St - Penn Station',
-	    '34thst': '34th St - Penn Station',
 	    'pennstation': '34th St - Penn Station',
 	    'chambers': 'Chambers St',
 	    'chambersst': 'Chambers St',
+            'chambersstreet': 'Chambers St',
 	    '23rdst': '23rd St',
 	    '23rdstreet': '23rd St',
 	    'courtsq': 'Court Sq',
-	    '59thstcolumbuscircle': '59th St - Columbus Circle',
-	    '59thst': '59th St - Columbus Circle',
 	    'columbuscircle': '59th St - Columbus Circle',
 	    'springst': 'Spring St',
 	    'fultonst': 'Fulton St',
-	    'worldtradecenter': 'World Trade Center'
+	    'worldtradecenter': 'World Trade Center',
+            '14thst': '14th Street Station',
+            '14thstreet': '14th Street Station',
+            '14thstreetstation': '14th Street Station',
+            'washingtonsquare': 'West 4th Street - Washington Square Station',
+            'west4street': 'West 4th Street - Washington Square Station',
+            'west4streetwashingtonsquare': 'West 4th Street - Washington Square Station'
 	}
     station_map_list = [(k, v) for k, v in station_map.items()]
     return [i[1] for i in sorted(station_map_list, key=lambda x:stringdist.levenshtein_norm(x[0], input_text))][0]
