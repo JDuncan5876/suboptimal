@@ -9,6 +9,7 @@ start, stop, n_stops = get_route("111 8th Ave New York", station)
 matched_start = match_station(strip_text(start))
 matched_stop = match_station(strip_text(stop))
 say("You're going to take " + matched_start + " " + str(n_stops) + " stops to " + matched_stop)
+print("STOP:", matched_stop)
 for i in range(n_stops):
     time.sleep(5)
     expected_match = matched_start if i == 0 else matched_stop if i == n_stops-1 else None

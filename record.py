@@ -8,6 +8,7 @@ from google.cloud.speech import enums
 from google.cloud.speech import types
 import pyaudio
 from six.moves import queue
+from run import get_score, strip_text 
 
 # Audio recording parameters
 RATE = 44100
@@ -125,6 +126,10 @@ def listen_print_loop(responses):
         else:
             result = transcript + overwrite_chars
             print(result)
+            score = get_score(strip_text(result)) 
+            print(score)
+            if score > 0.1:
+                return '-1'
             return result
 
 
@@ -148,9 +153,20 @@ def record():
                     for content in audio_generator)
 
         responses = client.streaming_recognize(streaming_config, requests)
+        complete_response = listen_print_loop(responses)
+
+        while complete_response == '-1':
+            audio_generator = stream.generator()
+            requests = (types.StreamingRecognizeRequest(audio_content=content)
+                    for content in audio_generator)
+
+            responses = client.streaming_recognize(streaming_config, requests)
+            complete_response = listen_print_loop(responses)
+
+
 
         # Now, put the transcription responses to use.
-        return listen_print_loop(responses)
+        return complete_response 
 
 if __name__ == "__main__":
     record()

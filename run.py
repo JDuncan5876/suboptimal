@@ -57,6 +57,7 @@ def match_station(input_text):
     station_map = {
 	    'canalst': 'Canal St',
 	    'canalstreet': 'Canal St',
+	    'canalstreetstation': 'Canal St',
 	    '42ndstportauthoritybusterm': '42nd St - Port Authority Bus Terminal',
 	    '42ndst': '42nd St - Port Authority Bus Terminal',
 	    '42ndstreet': '42nd St - Port Authority Bus Terminal',
@@ -82,6 +83,36 @@ def match_station(input_text):
 	}
     station_map_list = [(k, v) for k, v in station_map.items()]
     return [i[1] for i in sorted(station_map_list, key=lambda x:stringdist.levenshtein_norm(x[0], input_text))][0]
+
+def get_score(input_text):
+    station_map = {
+	    'canalst': 'Canal St',
+	    'canalstreet': 'Canal St',
+	    '42ndstportauthoritybusterm': '42nd St - Port Authority Bus Terminal',
+	    '42ndst': '42nd St - Port Authority Bus Terminal',
+	    '42ndstreet': '42nd St - Port Authority Bus Terminal',
+	    'portauthority': '42nd St - Port Authority Bus Terminal',
+	    'busterminal': '42nd St - Port Authority Bus Terminal',
+	    'pennstation': '34th St - Penn Station',
+	    'chambers': 'Chambers St',
+	    'chambersst': 'Chambers St',
+            'chambersstreet': 'Chambers St',
+	    '23rdst': '23rd St',
+	    '23rdstreet': '23rd St',
+	    'courtsq': 'Court Sq',
+	    'columbuscircle': '59th St - Columbus Circle',
+	    'springst': 'Spring St',
+	    'fultonst': 'Fulton St',
+	    'worldtradecenter': 'World Trade Center',
+            '14thst': '14th Street Station',
+            '14thstreet': '14th Street Station',
+            '14thstreetstation': '14th Street Station',
+            'washingtonsquare': 'West 4th Street - Washington Square Station',
+            'west4street': 'West 4th Street - Washington Square Station',
+            'west4streetwashingtonsquare': 'West 4th Street - Washington Square Station'
+	}
+    station_map_list = [(k, v) for k, v in station_map.items()]
+    return [stringdist.levenshtein_norm(i[0], input_text) for i in sorted(station_map_list, key=lambda x:stringdist.levenshtein_norm(x[0], input_text))][0]
 
 def main():
     wait_for_connection()
