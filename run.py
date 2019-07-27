@@ -87,7 +87,9 @@ def main():
     print(text)
     best_match = match_station(text)
     print(best_match)
-    say(best_match)
+    say("You are arriving at " + best_match)
+    time.sleep(0.5)
+    say("Prepare to exit at the next stop")
 
 if __name__ == "__main__":
     if len(sys.argv) > 1 and sys.argv[1] == '--loop':
