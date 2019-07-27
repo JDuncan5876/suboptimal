@@ -25,7 +25,7 @@ def analyze_image(file_name):
 
     response = client.text_detection(image=image)
     texts = response.text_annotations
-    return strip_text(texts[0].description)
+    return strip_text(texts[0].description) if len(texts) > 0 else ""
 
 if __name__ == "__main__":
     file_name = os.path.join(
